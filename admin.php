@@ -16,8 +16,6 @@ if (isset($_SESSION["adminloggedin"])) {
                 <li>utbildning</li>
                 <li>anställningar</li>
                 <li>protfolio</li>
-
-
             </ul>
 
             <form method="POST" action="admin.php">
@@ -30,18 +28,24 @@ if (isset($_SESSION["adminloggedin"])) {
             <h2>Utbildning</h2>
             <h3>kurser</h3>
             <table id="courses"></table>
+
+            <div id="edit-course"></div>
         </div>
 
         <div>
             <h2>Anställningar</h2>
             <h3>anställningar</h3>
             <div id="jobs"></div>
+
+            <div id="edit-job"></div>
         </div>
 
         <div>
             <h2>Portfolio</h2>
             <h3>webbsidor</h3>
             <div id="portfolio"></div>
+
+            <div id="edit-web"></div>
         </div>
 
 
@@ -62,10 +66,10 @@ if (isset($_SESSION["adminloggedin"])) {
                 <input type="text" name="name" id="name" required>
 
                 <label for="start-date-course">Start - år/månad</label>
-                <input type="date" name="start-date-course" id="start-date-course" required>
+                <input type="month" name="start-date-course" id="start-date-course" required>
 
                 <label for="end-date-course">Slut - år/månad</label>
-                <input type="date" name="end-date-course" id="end-date-course" required>
+                <input type="month" name="end-date-course" id="end-date-course" required>
 
                 <label for="now-course">Nuvarande kurs</label>
                 <input type="checkbox" name="now-course" id="now-course">
@@ -83,10 +87,10 @@ if (isset($_SESSION["adminloggedin"])) {
                 <input type="text" name="role" id="role">
 
                 <label for="start-date-job">Start - år/månad</label>
-                <input type="date" name="start-date-job" id="start-date-job">
+                <input type="month" name="start-date-job" id="start-date-job">
 
                 <label for="end-date-job">Slut år/månad</label>
-                <input type="date" name="end-date-job" id="end-date-job">
+                <input type="month" name="end-date-job" id="end-date-job">
 
                 <textarea name="desc-job" id="desc-job" cols="30" rows="10"></textarea>
 

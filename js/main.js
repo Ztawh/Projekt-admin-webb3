@@ -2,6 +2,7 @@
 let coursesEl = document.getElementById("courses");
 let jobsEl = document.getElementById("jobs");
 let portfolioEl = document.getElementById("portfolio");
+let editCourseEl = document.getElementById("edit-course");
 
 // Kursformulär
 let courseForm = document.getElementById("course-form");
@@ -76,7 +77,12 @@ function getCourses() {
                 let endDate = courses.end_date;
                 if (endDate == "0000-00-00") {
                     endDate = "Nuvarande";
+                } else {
+                    endDate = endDate.slice(0, -3);
                 }
+
+                let startDate = courses.start_date;
+                startDate = startDate.slice(0, -3);
 
                 // Skriv ut kurser i tabell
                 coursesEl.innerHTML +=
@@ -85,9 +91,9 @@ function getCourses() {
                 <td>${courses.school}</td>
                 <td>${courses.course_id}</td>
                 <td>${courses.name}</td>
-                <td>${courses.start_date}</td>
+                <td>${startDate}</td>
                 <td>${endDate}</td>
-                <td><button>X</button><button>Y</button></td>
+                <td><button onClick="deleteCourse(${courses.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editCourse(${courses.id}, '${courses.school}', '${courses.course_id}', '${courses.name}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button></td>
                 
             </tr>
             `;
@@ -103,6 +109,9 @@ function addCourse() {
     let name = nameInput.value;
     let start = startCourseInput.value;
     let end = endCourseInput.value;
+
+    start += "-00";
+    end += "-00";
 
     // Om ruta ibockad, sätt datum till noll
     if (checkCourse.checked) {
@@ -141,6 +150,71 @@ function addCourse() {
     courseForm.reset(); // Återställ formuläret
 }
 
+// Radera kurs
+function deleteCourse(id) {
+    // Begär bekräftelse
+    if (confirm("Är du säker på att du vill ta bort den här kursen?")) {
+        // Skickar id till webbtjänsten som tar bort kursen, samt skriver ut kurserna på nytt
+        fetch("http://localhost:8080/projekt-webbtjanst/courses.php?id=" + id, {
+            method: "DELETE",
+        })
+            .then(response => response.json())
+            .then(data => {
+                getCourses();
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    } else {
+        return false; // Om användaren inte vill radera händer ingenting
+    }
+}
+
+// Redigera kurs
+function editCourse(id, school, code, name, start, end) {
+
+    if(end == "0000-00-00" || end == "Nuvarande"){
+        end = "";
+    }
+    // Tar emot värden från klickad kurs
+    // Genererar ett formulär som är förifyllt med de nuvarande värdena
+    editCourseEl.innerHTML =
+        `
+        <form id="edit-course-form">
+            <h3>redigera kurs</h3>
+            <label for="school-edit">Skola</label>
+            <input type="text" name="school-edit" id="school-edit" value="${school}" required>
+
+            <label for="code-edit">Kurskod</label>
+            <input type="text" name="code-edit" id="code-edit" value="${code}" required>
+
+            <label for="name-edit">Kursnamn</label>
+            <input type="text" name="name-edit" id="name-edit" value="${name}" required>
+
+            <label for="start-date-course-edit">Start - år/månad</label>
+            <input type="month" name="start-date-course-edit" id="start-date-course-edit" value="${start}" required>
+
+            <label for="end-date-course-edit">Slut - år/månad</label>
+            <input type="month" name="end-date-course-edit" id="end-date-course-edit" value="${end}" required>
+
+            <label for="now-course-edit">Nuvarande kurs</label>
+            <input type="checkbox" name="now-course-edit" id="now-course-edit">
+
+            <div class="flex-container">
+                <button id="abort" onClick="abortEdit("edit-course-form")">Avbryt</button>
+                <button id="save">Spara</button>
+            </div>
+            
+        </form>
+        `;
+}
+
+function abortEdit(formName) {
+    let form = document.getElementById(formName);
+    // Tar bort formuläret
+    form.innerHTML = "";
+};
+
 // Hämta alla anställningar
 function getJobs() {
     jobsEl.innerHTML = "";
@@ -164,7 +238,7 @@ function getJobs() {
                 <p>${jobs.description}</p>
                 <span>${jobs.start_date}</span>
                 <span>${endDate}</span>
-                <button>X</button><button>Y</button>
+                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editJob(${jobs.id})"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -218,6 +292,25 @@ function addJob() {
     jobForm.reset(); // Återställ formuläret
 }
 
+function deleteJob(id) {
+    // Begär bekräftelse
+    if (confirm("Är du säker på att du vill ta bort den här anställningen?")) {
+        // Skickar id till webbtjänsten som tar bort anställningen, samt skriver ut anställningarna på nytt
+        fetch("http://localhost:8080/projekt-webbtjanst/jobs.php?id=" + id, {
+            method: "DELETE",
+        })
+            .then(response => response.json())
+            .then(data => {
+                getJobs();
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    } else {
+        return false; // Om användaren inte vill radera händer ingenting
+    }
+}
+
 // Hämta alla webbplatser
 function getPortfolio() {
     portfolioEl.innerHTML = "";
@@ -227,8 +320,6 @@ function getPortfolio() {
         .then(response => response.json())
         .then(data => {
             data.forEach(websites => {
-
-
                 portfolioEl.innerHTML +=
                     `
             <div>
@@ -236,7 +327,7 @@ function getPortfolio() {
                 <a href="${jobs.url}">Gå till webbplats ></a>
                 <p>${websites.description}</p>
                 
-                <button>X</button><button>Y</button>
+                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editWeb(${websites.id})"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -274,5 +365,24 @@ function addWebsite() {
         });
 
     webForm.reset(); // Återställ formuläret
+}
 
+// Ta bort webbsida
+function deleteWeb(id) {
+    // Begär bekräftelse
+    if (confirm("Är du säker på att du vill ta bort den här webbsidan?")) {
+        // Skickar id till webbtjänsten som tar bort anställningen, samt skriver ut anställningarna på nytt
+        fetch("http://localhost:8080/projekt-webbtjanst/websites.php?id=" + id, {
+            method: "DELETE",
+        })
+            .then(response => response.json())
+            .then(data => {
+                getPortfolio();
+            })
+            .catch(error => {
+                console.log("Error: ", error);
+            });
+    } else {
+        return false; // Om användaren inte vill radera händer ingenting
+    }
 }
