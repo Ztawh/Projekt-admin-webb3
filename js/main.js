@@ -3,6 +3,8 @@ let coursesEl = document.getElementById("courses");
 let jobsEl = document.getElementById("jobs");
 let portfolioEl = document.getElementById("portfolio");
 let editCourseEl = document.getElementById("edit-course");
+let editJobEl = document.getElementById("edit-job");
+let editWebEl = document.getElementById("edit-web");
 
 // Kursformulär
 let courseForm = document.getElementById("course-form");
@@ -81,6 +83,7 @@ function getCourses() {
                     endDate = endDate.slice(0, -3);
                 }
 
+                // Ta bort sista tre tecken så endast år och månad skrivs ut
                 let startDate = courses.start_date;
                 startDate = startDate.slice(0, -3);
 
@@ -122,7 +125,7 @@ function addCourse() {
         alert("Alla fält måste fyllas i!");
         return false;
     }
-    if (end == "") {
+    if (end == "-00") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
             return false;
@@ -173,7 +176,7 @@ function deleteCourse(id) {
 // Redigera kurs
 function editCourse(id, school, code, name, start, end) {
 
-    if(end == "0000-00-00" || end == "Nuvarande"){
+    if (end == "0000-00-00" || end == "Nuvarande") {
         end = "";
     }
     // Tar emot värden från klickad kurs
@@ -195,18 +198,82 @@ function editCourse(id, school, code, name, start, end) {
             <input type="month" name="start-date-course-edit" id="start-date-course-edit" value="${start}" required>
 
             <label for="end-date-course-edit">Slut - år/månad</label>
-            <input type="month" name="end-date-course-edit" id="end-date-course-edit" value="${end}" required>
+            <input type="month" name="end-date-course-edit" id="end-date-course-edit" value="${end}">
 
             <label for="now-course-edit">Nuvarande kurs</label>
             <input type="checkbox" name="now-course-edit" id="now-course-edit">
 
             <div class="flex-container">
-                <button id="abort" onClick="abortEdit("edit-course-form")">Avbryt</button>
+                <button id="abort" onClick="abortEdit('edit-course-form')">Avbryt</button>
                 <button id="save">Spara</button>
             </div>
             
         </form>
         `;
+
+    // Variabel för spara-knappen
+    let save = document.getElementById("save");
+
+    // Lyssnar på spara-knappen
+    save.addEventListener("click", function (e) {
+        e.preventDefault();
+        updateCourse(id);
+    });
+}
+
+function updateCourse(id) {
+    let schoolInputEdit = document.getElementById("school-edit");
+    let codeInputEdit = document.getElementById("code-edit");
+    let nameInputEdit = document.getElementById("name-edit");
+    let startInputEdit = document.getElementById("start-date-course-edit");
+    let endInputEdit = document.getElementById("end-date-course-edit");
+    let checkEdit = document.getElementById("now-course-edit");
+
+    let school = schoolInputEdit.value;
+    let code = codeInputEdit.value;
+    let name = nameInputEdit.value;
+    let start = startInputEdit.value;
+    let end = endInputEdit.value;
+
+    start += "-00";
+    end += "-00";
+
+    // Om ruta ibockad, sätt datum till noll
+    if (checkEdit.checked) {
+        end = "0000-00-00";
+    }
+
+    if (school == "" || code == "" || name == "" || start == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
+    if (end == "-00") {
+        if (!checkCourse.checked) {
+            alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
+            return false;
+        }
+    }
+
+    // Lägg värden i objekt
+    let course = { "school": school, "course_id": code, "name": name, "start_date": start, "end_date": end };
+
+    console.log(course);
+
+    // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
+    fetch("http://localhost:8080/projekt-webbtjanst/courses.php?id=" + id, {
+        method: "PUT",
+        body: JSON.stringify(course),
+    })
+        .then(response => response.json())
+        .then(data => {
+            getCourses();
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+        });
+
+    abortEdit("edit-course-form");
 }
 
 function abortEdit(formName) {
@@ -228,7 +295,13 @@ function getJobs() {
                 let endDate = jobs.end_date;
                 if (endDate == "0000-00-00") {
                     endDate = "Nuvarande";
+                } else {
+                    endDate = endDate.slice(0, -3);
                 }
+
+                // Ta bort sista tre tecken så endast år och månad skrivs ut
+                let startDate = jobs.start_date;
+                startDate = startDate.slice(0, -3);
 
                 jobsEl.innerHTML +=
                     `
@@ -236,9 +309,9 @@ function getJobs() {
                 <h4>${jobs.workplace}</h4>
                 <h5>${jobs.title}</5>
                 <p>${jobs.description}</p>
-                <span>${jobs.start_date}</span>
+                <span>${startDate}</span>
                 <span>${endDate}</span>
-                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editJob(${jobs.id})"><i class="far fa-edit"></i></button>
+                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editJob(${jobs.id}, '${jobs.workplace}', '${jobs.title}', '${jobs.description}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -254,6 +327,9 @@ function addJob() {
     let start = startJobInput.value;
     let end = endJobInput.value;
 
+    start += "-00";
+    end += "-00";
+
     // Om ruta ibockad, sätt datum till noll
     if (checkJob.checked) {
         end = "0000-00-00";
@@ -264,7 +340,7 @@ function addJob() {
         return false;
     }
 
-    if (end == "") {
+    if (end == "-00") {
         if (!checkJob.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
             return false;
@@ -311,6 +387,107 @@ function deleteJob(id) {
     }
 }
 
+function editJob(id, workplace, title, desc, start, end) {
+
+    if (end == "0000-00-00" || end == "Nuvarande") {
+        end = "";
+    }
+    // Tar emot värden från klickad anställning
+    // Genererar ett formulär som är förifyllt med de nuvarande värdena
+    editJobEl.innerHTML =
+        `
+        <form id="edit-job-form">
+            <h3>redigera anställning</h3>
+            <label for="workplace-edit">Arbetsplats</label>
+            <input type="text" name="workplace-edit" id="workplace-edit" value="${workplace}" required>
+
+            <label for="role-edit">Roll</label>
+            <input type="text" name="role-edit" id="role-edit" value="${title}" required>
+
+            <textarea name="desc-job-edit" id="desc-job-edit" cols="30" rows="10">${desc}</textarea>
+
+            <label for="start-date-job-edit">Start - år/månad</label>
+            <input type="month" name="start-date-job-edit" id="start-date-job-edit" value="${start}" required>
+
+            <label for="end-date-job-edit">Slut - år/månad</label>
+            <input type="month" name="end-date-job-edit" id="end-date-job-edit" value="${end}">
+
+            <label for="now-job-edit">Nuvarande anställning</label>
+            <input type="checkbox" name="now-job-edit" id="now-job-edit">
+
+            <div class="flex-container">
+                <button id="abort" onClick="abortEdit('edit-job-form')">Avbryt</button>
+                <button id="save-job">Spara</button>
+            </div>
+            
+        </form>
+        `;
+
+    // Variabel för spara-knappen
+    let save = document.getElementById("save-job");
+
+    // Lyssnar på spara-knappen
+    save.addEventListener("click", function (e) {
+        e.preventDefault();
+        updateJob(id);
+    });
+}
+
+function updateJob(id) {
+    let workplaceInputEdit = document.getElementById("workplace-edit");
+    let roleInputEdit = document.getElementById("role-edit");
+    let descInputEdit = document.getElementById("desc-job-edit");
+    let startInputEdit = document.getElementById("start-date-job-edit");
+    let endInputEdit = document.getElementById("end-date-job-edit");
+    let checkEdit = document.getElementById("now-job-edit");
+
+    let workplace = workplaceInputEdit.value;
+    let role = roleInputEdit.value;
+    let desc = descInputEdit.value;
+    let start = startInputEdit.value;
+    let end = endInputEdit.value;
+
+    start += "-00";
+    end += "-00";
+
+    // Om ruta ibockad, sätt datum till noll
+    if (checkEdit.checked) {
+        end = "0000-00-00";
+    }
+
+    if (workplace == "" || role == "" || desc == "" || start == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
+    if (end == "-00") {
+        if (!checkEdit.checked) {
+            alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
+            return false;
+        }
+    }
+
+    // Lägg värden i objekt
+    let job = { "workplace": workplace, "title": role, "description": desc, "start_date": start, "end_date": end };
+
+    console.log(job);
+
+    // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
+    fetch("http://localhost:8080/projekt-webbtjanst/jobs.php?id=" + id, {
+        method: "PUT",
+        body: JSON.stringify(job),
+    })
+        .then(response => response.json())
+        .then(data => {
+            getJobs();
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+        });
+
+    abortEdit("edit-job-form");
+}
+
 // Hämta alla webbplatser
 function getPortfolio() {
     portfolioEl.innerHTML = "";
@@ -324,10 +501,10 @@ function getPortfolio() {
                     `
             <div>
                 <h4>${websites.title}</h4>
-                <a href="${jobs.url}">Gå till webbplats ></a>
+                <a href="${websites.url}">Gå till webbplats ></a>
                 <p>${websites.description}</p>
                 
-                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editWeb(${websites.id})"><i class="far fa-edit"></i></button>
+                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editWeb(${websites.id},'${websites.title}', '${websites.url}', '${websites.description}')"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -385,4 +562,73 @@ function deleteWeb(id) {
     } else {
         return false; // Om användaren inte vill radera händer ingenting
     }
+}
+
+function editWeb(id, title, url, desc) {
+    // Tar emot värden från klickad anställning
+    // Genererar ett formulär som är förifyllt med de nuvarande värdena
+    editWebEl.innerHTML = `
+    <form id="edit-web-form">
+        <h3>redigera webbsida</h3>
+        <label for="title-edit">Titel</label>
+        <input type="text" name="title-edit" id="title-edit" value="${title}" required>
+
+        <label for="url-edit">Webblänk</label>
+        <input type="text" name="url-edit" id="url-edit" value="${url}" required>
+
+        <textarea name="desc-web-edit" id="desc-web-edit" cols="30" rows="10">${desc}</textarea>
+
+        <div class="flex-container">
+            <button id="abort" onClick="abortEdit('edit-web-form')">Avbryt</button>
+            <button id="save-web">Spara</button>
+        </div>
+        
+    </form>
+    `;
+
+    // Variabel för spara-knappen
+    let save = document.getElementById("save-web");
+
+    // Lyssnar på spara-knappen
+    save.addEventListener("click", function (e) {
+        e.preventDefault();
+        updateWeb(id);
+    });
+}
+
+function updateWeb(id) {
+    // Hämtar värden från redigera-formuläret
+    let titleInputEdit = document.getElementById("title-edit");
+    let urlInputEdit = document.getElementById("url-edit");
+    let descInputEdit = document.getElementById("desc-web-edit");
+
+    let title = titleInputEdit.value;
+    let url = urlInputEdit.value;
+    let desc = descInputEdit.value;
+
+    // Kontrollerar att alla fälten är ifyllda
+    if (title == "" || url == "" || desc == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
+    // Lägg värden i objekt
+    let website = { "title": title, "url": url, "description": desc };
+
+    console.log(website);
+
+    // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
+    fetch("http://localhost:8080/projekt-webbtjanst/websites.php?id=" + id, {
+        method: "PUT",
+        body: JSON.stringify(website),
+    })
+        .then(response => response.json())
+        .then(data => {
+            getPortfolio();
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+        });
+
+    abortEdit("edit-web-form");
 }
