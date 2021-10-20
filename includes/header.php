@@ -12,8 +12,3 @@ session_start();
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
-    <header>
-        <h1>administration</h1>
-        <h2>amandas portfolio</h2>
-    </header>

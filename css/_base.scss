@@ -1,1 +1,27 @@
-$color: #344556;
+// Nollställer styling i webbläsaren
+@import url("https://necolas.github.io/normalize.css/8.0.1/normalize.css");
+
+// Typsnitt
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// Variabler
+// $login-page-gradient: linear-gradient(-45deg, #003749, #3bb6f3, #b0e0fa);
+// $login-page-gradient: linear-gradient(-45deg, #3b0072, #198cd8, #4cc6db, #a9ddff);
+$login-page-gradient: linear-gradient(-45deg, #3b0072, #198cd8, #4cc6db, #198cd8);
+$submit-color: #023b5f;
+$submit-hover: #015386;
+$light-blue: lighten(#023b5f, 75);
+$form-background-color: #eee;
+
+// Mixins
+@mixin desktop {
+    @media screen and (min-width: 800px){
+        @content;
+    }
+}

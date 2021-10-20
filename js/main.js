@@ -56,6 +56,19 @@ webBtn.addEventListener("click", function (e) {
 });
 
 // Funktioner
+
+// function HtmlEncode(s)
+// {
+//   var el = document.createElement("div");
+//   el.innerText = el.textContent = s;
+//   s = el.innerHTML;
+//   return s;
+// }
+
+// function escapeHtml(str) {
+//     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+// }
+
 // Hämta alla kurser
 function getCourses() {
     coursesEl.innerHTML = "";
@@ -86,6 +99,8 @@ function getCourses() {
                 // Ta bort sista tre tecken så endast år och månad skrivs ut
                 let startDate = courses.start_date;
                 startDate = startDate.slice(0, -3);
+
+                //let school = escapeHtml(courses.school);
 
                 // Skriv ut kurser i tabell
                 coursesEl.innerHTML +=
@@ -175,6 +190,7 @@ function deleteCourse(id) {
 
 // Redigera kurs
 function editCourse(id, school, code, name, start, end) {
+    console.log(school);
 
     if (end == "0000-00-00" || end == "Nuvarande") {
         end = "";
@@ -307,7 +323,7 @@ function getJobs() {
                     `
             <div>
                 <h4>${jobs.workplace}</h4>
-                <h5>${jobs.title}</5>
+                <h5>${jobs.title}</h5>
                 <p>${jobs.description}</p>
                 <span>${startDate}</span>
                 <span>${endDate}</span>

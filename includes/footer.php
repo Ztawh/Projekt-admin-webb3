@@ -1,4 +1,4 @@
-<footer>
+
     <div><span>Copyright - Amanda Hwatz Björkholm 2021</span></div>
 </footer>
 
