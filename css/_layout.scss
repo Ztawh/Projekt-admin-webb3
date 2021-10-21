@@ -9,6 +9,7 @@ body {
 
 main {
     width: fit-content;
+    max-width: 900px;
     margin: 2rem auto;
 }
 
@@ -67,10 +68,6 @@ header {
 // Logga in-formulär
 #login-container {
     color: white;
-
-    label {
-        margin-top: 0.5rem;
-    }
 }
 
 // Formulär
@@ -84,6 +81,32 @@ input {
     padding: 0.5rem;
 }
 
+label {
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+textarea {
+    padding: 0.5rem;
+    border: none;
+    resize: unset;
+    width: 100%;
+}
+
+// Checkrutor
+.checkbox {
+    // display: inline-block;
+    label, input {
+        width: fit-content;
+        margin: 0.5rem;
+    }
+
+    input {
+        margin-top: 0.8rem;
+        margin-left: 0;
+    }
+}
+
 .submit-btn {
     background: $submit-color;
     color: white;
@@ -91,6 +114,7 @@ input {
     width: 100%;
     margin-top: 0.5rem;
     transition: 0.2s;
+
 
     @include desktop {
         &:hover {
@@ -121,7 +145,7 @@ nav {
     width: 100%;
     position: sticky;
     top: 0;
-
+    background: white;
 
     ul {
         list-style-type: none;
@@ -147,15 +171,40 @@ nav {
     #logout-btn {
         position: absolute;
         right: 1rem;
-        top: -5px;
+        top: -3px;
         width: 80px;
-
+        background: white;
+        color: $submit-color;
     }
 }
+
+// Aside
 
 aside {
     background: $form-background-color;
     padding: 1.5rem;
+
+    form {
+        margin-bottom: 2rem;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        border-bottom: solid 3px $submit-hover;
+    }
+}
+
+// Admin-main
+
+.margin-left {
+    margin-left: 1rem;
 }
 
 section {
@@ -165,6 +214,7 @@ section {
         text-align: center;
         margin-bottom: 0.5rem;
         font-size: 2rem;
+        letter-spacing: 2px;
     }
 
     h3 {
@@ -174,17 +224,91 @@ section {
         font-size: 1.5rem;
     }
 
+    h4 {
+        font-size: 1.4rem;
+    }
+
+    h5 {
+        font-size: 1.1rem;
+    }
+
+    .delete {
+        color: $danger;
+    }
+
+    button {
+        border: none;
+        background: transparent;
+        margin: 0 0.5rem;
+        font-size: 1.2rem;
+        float: right;
+
+        @include desktop {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    // Anställningar
+    .job:nth-of-type(odd), .website:nth-of-type(odd) {
+        background: $light-blue; 
+    }
+
+    .job, .website {
+        padding: 1rem;
+
+        p {
+            margin: 1rem 0;
+        }
+    }
+
+    // Redigeringsfomrulär
     form {
         background: $form-background-color;
         border-left: solid 10px $submit-color;
         border-right: solid 10px $submit-color;
-    } 
+    
+        padding: 0 1rem 1rem 1rem;
+        width: fit-content;
+        margin: 2rem auto 0 auto;
+
+        h3 {
+            background: none;
+            color: $submit-color;
+        }
+
+        .button-container {
+            margin-top: 1rem;
+        }
+        
+
+        button {
+            border-radius: 15px;
+            border: none;
+            margin: 0 0.2rem;
+        }
+
+        .abort-btn {
+            @extend .submit-btn;
+            background: $danger;
+
+            @include desktop {
+                &:hover {
+                    background: $danger-hover;
+                }
+            }
+        }
+    }
 }
 
+
+// Tabell
 table {
     // Ta bort vit linje mellan alla td
     overflow: auto;
     border-collapse: collapse;
+    width: 900px;
 
     // Gör varannan rad mörkare
     tbody:nth-of-type(even){
@@ -193,10 +317,16 @@ table {
         } 
     }
 
+    th {
+        text-align: left;
+    }
+
     td {
         padding: 0.3rem;
     }
 }
+
+
 
 
 // footer

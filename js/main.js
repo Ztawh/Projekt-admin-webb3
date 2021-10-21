@@ -102,6 +102,14 @@ function getCourses() {
 
                 //let school = escapeHtml(courses.school);
 
+                // Tar bort eventuella enkelfnuttar i strängen
+                let school = courses.school;
+                let courseId = courses.course_id;
+                let name = courses.name;
+                school = school.replaceAll("'", "\\'");
+                courseId = courseId.replaceAll("'", "\\'");
+                name = name.replaceAll("'", "\\'");
+
                 // Skriv ut kurser i tabell
                 coursesEl.innerHTML +=
                     `
@@ -111,7 +119,7 @@ function getCourses() {
                 <td>${courses.name}</td>
                 <td>${startDate}</td>
                 <td>${endDate}</td>
-                <td><button onClick="deleteCourse(${courses.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editCourse(${courses.id}, '${courses.school}', '${courses.course_id}', '${courses.name}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button></td>
+                <td><button onClick="deleteCourse(${courses.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editCourse(${courses.id}, '${school}', '${courseId}', '${name}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button></td>
                 
             </tr>
             `;
@@ -201,27 +209,35 @@ function editCourse(id, school, code, name, start, end) {
         `
         <form id="edit-course-form">
             <h3>redigera kurs</h3>
-            <label for="school-edit">Skola</label>
-            <input type="text" name="school-edit" id="school-edit" value="${school}" required>
-
-            <label for="code-edit">Kurskod</label>
-            <input type="text" name="code-edit" id="code-edit" value="${code}" required>
-
-            <label for="name-edit">Kursnamn</label>
-            <input type="text" name="name-edit" id="name-edit" value="${name}" required>
-
-            <label for="start-date-course-edit">Start - år/månad</label>
-            <input type="month" name="start-date-course-edit" id="start-date-course-edit" value="${start}" required>
-
-            <label for="end-date-course-edit">Slut - år/månad</label>
-            <input type="month" name="end-date-course-edit" id="end-date-course-edit" value="${end}">
-
-            <label for="now-course-edit">Nuvarande kurs</label>
-            <input type="checkbox" name="now-course-edit" id="now-course-edit">
-
             <div class="flex-container">
-                <button id="abort" onClick="abortEdit('edit-course-form')">Avbryt</button>
-                <button id="save">Spara</button>
+                <div>
+                    <label for="school-edit">Skola</label>
+                    <input type="text" name="school-edit" id="school-edit" value="${school}" required>
+
+                    <label for="code-edit">Kurskod</label>
+                    <input type="text" name="code-edit" id="code-edit" value="${code}" required>
+                
+                    <label for="name-edit">Kursnamn</label>
+                    <input type="text" name="name-edit" id="name-edit" value="${name}" required>
+                </div>
+
+                <div class="margin-left">
+                    <label for="start-date-course-edit">Start - år/månad</label>
+                    <input type="month" name="start-date-course-edit" id="start-date-course-edit" value="${start}" required>
+
+                    <label for="end-date-course-edit">Slut - år/månad</label>
+                    <input type="month" name="end-date-course-edit" id="end-date-course-edit" value="${end}">
+
+                    <div class="flex-container checkbox">
+                        <label for="now-course-edit">Nuvarande kurs</label>
+                        <input type="checkbox" name="now-course-edit" id="now-course-edit">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-container button-container">
+                <button class="abort-btn" id="abort" onClick="abortEdit('edit-course')">Avbryt</button>
+                <button class="submit-btn" id="save">Spara</button>
             </div>
             
         </form>
@@ -289,7 +305,7 @@ function updateCourse(id) {
             console.log("Error: ", error);
         });
 
-    abortEdit("edit-course-form");
+    abortEdit("edit-course");
 }
 
 function abortEdit(formName) {
@@ -319,15 +335,23 @@ function getJobs() {
                 let startDate = jobs.start_date;
                 startDate = startDate.slice(0, -3);
 
+                // Tar bort eventuella enkelfnuttar
+                let workplace = jobs.workplace;
+                let title = jobs.title;
+                let desc =jobs.description;
+                workplace = workplace.replaceAll("'", "\\'");
+                title = title.replaceAll("'", "\\'");
+                desc = desc.replaceAll("'", "\\'");
+
                 jobsEl.innerHTML +=
                     `
-            <div>
+            <div class="job">
                 <h4>${jobs.workplace}</h4>
                 <h5>${jobs.title}</h5>
                 <p>${jobs.description}</p>
-                <span>${startDate}</span>
+                <span>Period: ${startDate} till </span>
                 <span>${endDate}</span>
-                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editJob(${jobs.id}, '${jobs.workplace}', '${jobs.title}', '${jobs.description}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
+                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editJob(${jobs.id}, '${workplace}', '${title}', '${desc}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -414,26 +438,35 @@ function editJob(id, workplace, title, desc, start, end) {
         `
         <form id="edit-job-form">
             <h3>redigera anställning</h3>
-            <label for="workplace-edit">Arbetsplats</label>
-            <input type="text" name="workplace-edit" id="workplace-edit" value="${workplace}" required>
+            <div class="flex-container">
+                <div>
+                    <label for="workplace-edit">Arbetsplats</label>
+                    <input type="text" name="workplace-edit" id="workplace-edit" value="${workplace}" required>
 
-            <label for="role-edit">Roll</label>
-            <input type="text" name="role-edit" id="role-edit" value="${title}" required>
+                    <label for="role-edit">Roll</label>
+                    <input type="text" name="role-edit" id="role-edit" value="${title}" required>
+                </div>
 
+                <div class="margin-left">
+                    <label for="start-date-job-edit">Start - år/månad</label>
+                    <input type="month" name="start-date-job-edit" id="start-date-job-edit" value="${start}" required>
+
+                    <label for="end-date-job-edit">Slut - år/månad</label>
+                    <input type="month" name="end-date-job-edit" id="end-date-job-edit" value="${end}">
+                </div>
+            </div>
+
+            <label for="desc-job-edit">Beskrivning</label>
             <textarea name="desc-job-edit" id="desc-job-edit" cols="30" rows="10">${desc}</textarea>
 
-            <label for="start-date-job-edit">Start - år/månad</label>
-            <input type="month" name="start-date-job-edit" id="start-date-job-edit" value="${start}" required>
+            <div class="flex-container checkbox">
+                <label for="now-job-edit">Nuvarande anställning</label>
+                <input type="checkbox" name="now-job-edit" id="now-job-edit">
+            </div>
 
-            <label for="end-date-job-edit">Slut - år/månad</label>
-            <input type="month" name="end-date-job-edit" id="end-date-job-edit" value="${end}">
-
-            <label for="now-job-edit">Nuvarande anställning</label>
-            <input type="checkbox" name="now-job-edit" id="now-job-edit">
-
-            <div class="flex-container">
-                <button id="abort" onClick="abortEdit('edit-job-form')">Avbryt</button>
-                <button id="save-job">Spara</button>
+            <div class="flex-container button-container">
+                <button class="abort-btn" id="abort" onClick="abortEdit('edit-job')">Avbryt</button>
+                <button class="submit-btn" id="save-job">Spara</button>
             </div>
             
         </form>
@@ -501,7 +534,7 @@ function updateJob(id) {
             console.log("Error: ", error);
         });
 
-    abortEdit("edit-job-form");
+    abortEdit("edit-job");
 }
 
 // Hämta alla webbplatser
@@ -513,14 +546,23 @@ function getPortfolio() {
         .then(response => response.json())
         .then(data => {
             data.forEach(websites => {
+
+                // Tar bort eventuella enkelfnuttar
+                let title = websites.title;
+                let url = websites.url;
+                let desc = websites.description;
+                title = title.replaceAll("'", "\\'");
+                url = url.replaceAll("'", "\\'");
+                desc = desc.replaceAll("'", "\\'");
+
                 portfolioEl.innerHTML +=
                     `
-            <div>
+            <div class="website">
                 <h4>${websites.title}</h4>
                 <a href="${websites.url}">Gå till webbplats ></a>
                 <p>${websites.description}</p>
                 
-                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt"></i></button><button onClick="editWeb(${websites.id},'${websites.title}', '${websites.url}', '${websites.description}')"><i class="far fa-edit"></i></button>
+                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editWeb(${websites.id},'${title}', '${url}', '${desc}')"><i class="far fa-edit"></i></button>
             </div>
             `;
             })
@@ -592,11 +634,12 @@ function editWeb(id, title, url, desc) {
         <label for="url-edit">Webblänk</label>
         <input type="text" name="url-edit" id="url-edit" value="${url}" required>
 
+        <label for="desc-web-edit">Beskrivning</label>
         <textarea name="desc-web-edit" id="desc-web-edit" cols="30" rows="10">${desc}</textarea>
 
-        <div class="flex-container">
-            <button id="abort" onClick="abortEdit('edit-web-form')">Avbryt</button>
-            <button id="save-web">Spara</button>
+        <div class="flex-container button-container">
+            <button class="abort-btn" id="abort" onClick="abortEdit('edit-web')">Avbryt</button>
+            <button class="submit-btn" id="save-web">Spara</button>
         </div>
         
     </form>
@@ -646,5 +689,5 @@ function updateWeb(id) {
             console.log("Error: ", error);
         });
 
-    abortEdit("edit-web-form");
+    abortEdit("edit-web");
 }

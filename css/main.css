@@ -16,6 +16,7 @@ body {
 
 main {
   width: fit-content;
+  max-width: 900px;
   margin: 2rem auto;
 }
 
@@ -69,9 +70,6 @@ header {
 #login-container {
   color: white;
 }
-#login-container label {
-  margin-top: 0.5rem;
-}
 
 label, input {
   display: block;
@@ -83,7 +81,28 @@ input {
   padding: 0.5rem;
 }
 
-.submit-btn {
+label {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+textarea {
+  padding: 0.5rem;
+  border: none;
+  resize: unset;
+  width: 100%;
+}
+
+.checkbox label, .checkbox input {
+  width: fit-content;
+  margin: 0.5rem;
+}
+.checkbox input {
+  margin-top: 0.8rem;
+  margin-left: 0;
+}
+
+.submit-btn, section form .abort-btn {
   background: #023b5f;
   color: white;
   padding: 0.3rem;
@@ -92,7 +111,7 @@ input {
   transition: 0.2s;
 }
 @media screen and (min-width: 800px) {
-  .submit-btn:hover {
+  .submit-btn:hover, section form .abort-btn:hover {
     background: #015386;
     cursor: pointer;
   }
@@ -115,6 +134,7 @@ nav {
   width: 100%;
   position: sticky;
   top: 0;
+  background: white;
 }
 nav ul {
   list-style-type: none;
@@ -135,13 +155,31 @@ nav ul li a {
 nav #logout-btn {
   position: absolute;
   right: 1rem;
-  top: -5px;
+  top: -3px;
   width: 80px;
+  background: white;
+  color: #023b5f;
 }
 
 aside {
   background: #eee;
   padding: 1.5rem;
+}
+aside form {
+  margin-bottom: 2rem;
+}
+aside form input {
+  width: 100%;
+}
+aside h2 {
+  margin-bottom: 1rem;
+}
+aside h3 {
+  border-bottom: solid 3px #015386;
+}
+
+.margin-left {
+  margin-left: 1rem;
 }
 
 section {
@@ -151,6 +189,7 @@ section h2 {
   text-align: center;
   margin-bottom: 0.5rem;
   font-size: 2rem;
+  letter-spacing: 2px;
 }
 section h3 {
   background: #023b5f;
@@ -158,18 +197,75 @@ section h3 {
   padding: 0.5rem;
   font-size: 1.5rem;
 }
+section h4 {
+  font-size: 1.4rem;
+}
+section h5 {
+  font-size: 1.1rem;
+}
+section .delete {
+  color: #b43616;
+}
+section button {
+  border: none;
+  background: transparent;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  float: right;
+}
+@media screen and (min-width: 800px) {
+  section button:hover {
+    cursor: pointer;
+  }
+}
+section .job:nth-of-type(odd), section .website:nth-of-type(odd) {
+  background: #e1f3fe;
+}
+section .job, section .website {
+  padding: 1rem;
+}
+section .job p, section .website p {
+  margin: 1rem 0;
+}
 section form {
   background: #eee;
   border-left: solid 10px #023b5f;
   border-right: solid 10px #023b5f;
+  padding: 0 1rem 1rem 1rem;
+  width: fit-content;
+  margin: 2rem auto 0 auto;
+}
+section form h3 {
+  background: none;
+  color: #023b5f;
+}
+section form .button-container {
+  margin-top: 1rem;
+}
+section form button {
+  border-radius: 15px;
+  border: none;
+  margin: 0 0.2rem;
+}
+section form .abort-btn {
+  background: #b43616;
+}
+@media screen and (min-width: 800px) {
+  section form .abort-btn:hover {
+    background: #9d2f13;
+  }
 }
 
 table {
   overflow: auto;
   border-collapse: collapse;
+  width: 900px;
 }
 table tbody:nth-of-type(even) tr {
   background: #e1f3fe;
+}
+table th {
+  text-align: left;
 }
 table td {
   padding: 0.3rem;

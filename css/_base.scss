@@ -17,7 +17,10 @@ $login-page-gradient: linear-gradient(-45deg, #3b0072, #198cd8, #4cc6db, #198cd8
 $submit-color: #023b5f;
 $submit-hover: #015386;
 $light-blue: lighten(#023b5f, 75);
+$blue: #198cd8;
 $form-background-color: #eee;
+$danger: #b43616;
+$danger-hover: darken(#b43616, 5);
 
 // Mixins
 @mixin desktop {
