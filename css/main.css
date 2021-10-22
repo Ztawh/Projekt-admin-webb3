@@ -210,8 +210,9 @@ section button {
   border: none;
   background: transparent;
   margin: 0 0.5rem;
+}
+section button i {
   font-size: 1.2rem;
-  float: right;
 }
 @media screen and (min-width: 800px) {
   section button:hover {
@@ -219,13 +220,19 @@ section button {
   }
 }
 section .job:nth-of-type(odd), section .website:nth-of-type(odd) {
-  background: #e1f3fe;
+  background: #cee9f7;
 }
 section .job, section .website {
   padding: 1rem;
+  position: relative;
 }
 section .job p, section .website p {
-  margin: 1rem 0;
+  margin: 1rem 0 1.5rem 0;
+}
+section .job .button-container-list, section .website .button-container-list {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 1rem;
 }
 section form {
   background: #eee;
@@ -262,7 +269,7 @@ table {
   width: 900px;
 }
 table tbody:nth-of-type(even) tr {
-  background: #e1f3fe;
+  background: #cee9f7;
 }
 table th {
   text-align: left;

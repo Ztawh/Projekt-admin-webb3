@@ -60,7 +60,7 @@ if (isset($_SESSION["adminloggedin"])) {
                     </form>
                 </div>
                 <div>
-                    <h3>Lägg till antsällning</h3>
+                    <h3>Lägg till anställning</h3>
                     <form id="job-form">
                         <label for="workplace">Arbetsplats</label>
                         <input type="text" name="workplace" id="workplace" placeholder="Målaranders AB">

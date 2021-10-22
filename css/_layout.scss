@@ -240,8 +240,10 @@ section {
         border: none;
         background: transparent;
         margin: 0 0.5rem;
-        font-size: 1.2rem;
-        float: right;
+        
+        i {
+            font-size: 1.2rem;
+        }
 
         @include desktop {
             &:hover {
@@ -250,6 +252,7 @@ section {
         }
     }
 
+
     // Anställningar
     .job:nth-of-type(odd), .website:nth-of-type(odd) {
         background: $light-blue; 
@@ -257,10 +260,28 @@ section {
 
     .job, .website {
         padding: 1rem;
+        position: relative;
 
         p {
-            margin: 1rem 0;
+            margin: 1rem 0 1.5rem 0;
         }
+
+        .button-container-list {
+            position: absolute;
+            right: 0.5rem;
+            bottom: 1rem;
+
+            // .delete, .fa-edit {
+            //     transition: 0.5s;
+            //     @include desktop {
+            //         &:hover {
+            //             margin-bottom: 0.4rem;
+            //         }
+            //     }
+            // }
+        }
+
+        
     }
 
     // Redigeringsfomrulär

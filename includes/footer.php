@@ -1,5 +1,5 @@
 
-    <div><span>Copyright - Amanda Hwatz Björkholm 2021</span></div>
+    <div><span><i class="far fa-copyright"></i> Amanda Hwatz Björkholm - 2021</span></div>
 </footer>
 
 <!-- Ikoner från fontawesome -->

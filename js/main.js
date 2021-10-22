@@ -136,8 +136,24 @@ function addCourse() {
     let start = startCourseInput.value;
     let end = endCourseInput.value;
 
-    start += "-00";
-    end += "-00";
+    // Kontrollera om formatet är rätt på datum
+    if (/^\d{4}-\d{2}$/g.test(start)) {
+        start += "-00";
+        console.log(start);
+    } else {
+        alert("Ange ett korrekt datumformat (YYYY-MM)");
+        return false;
+    }
+
+    // Om slutdatum är angivet, kontrollera format
+    if (end) {
+        if (/^\d{4}-\d{2}$/g.test(end)) {
+            end += "-00";
+        } else {
+            alert("Ange ett korrekt datumformat (YYYY-MM)");
+            return false;
+        }
+    }
 
     // Om ruta ibockad, sätt datum till noll
     if (checkCourse.checked) {
@@ -148,7 +164,7 @@ function addCourse() {
         alert("Alla fält måste fyllas i!");
         return false;
     }
-    if (end == "-00") {
+    if (end == "") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
             return false;
@@ -338,7 +354,7 @@ function getJobs() {
                 // Tar bort eventuella enkelfnuttar
                 let workplace = jobs.workplace;
                 let title = jobs.title;
-                let desc =jobs.description;
+                let desc = jobs.description;
                 workplace = workplace.replaceAll("'", "\\'");
                 title = title.replaceAll("'", "\\'");
                 desc = desc.replaceAll("'", "\\'");
@@ -351,7 +367,9 @@ function getJobs() {
                 <p>${jobs.description}</p>
                 <span>Period: ${startDate} till </span>
                 <span>${endDate}</span>
-                <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editJob(${jobs.id}, '${workplace}', '${title}', '${desc}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
+                <div class="button-container-list">
+                    <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editJob(${jobs.id}, '${workplace}', '${title}', '${desc}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
+                </div>
             </div>
             `;
             })
@@ -367,8 +385,23 @@ function addJob() {
     let start = startJobInput.value;
     let end = endJobInput.value;
 
-    start += "-00";
-    end += "-00";
+    // Kontrollera om formatet är rätt på datum
+    if (/^\d{4}-\d{2}$/g.test(start)) {
+        start += "-00";
+    } else {
+        alert("Ange ett korrekt datumformat (YYYY-MM)");
+        return false;
+    }
+
+    // Om slutdatum är angivet, kontrollera format
+    if (end) {
+        if (/^\d{4}-\d{2}$/g.test(end)) {
+            end += "-00";
+        } else {
+            alert("Ange ett korrekt datumformat (YYYY-MM)");
+            return false;
+        }
+    }
 
     // Om ruta ibockad, sätt datum till noll
     if (checkJob.checked) {
@@ -380,7 +413,7 @@ function addJob() {
         return false;
     }
 
-    if (end == "-00") {
+    if (end == "") {
         if (!checkJob.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
             return false;
@@ -562,7 +595,9 @@ function getPortfolio() {
                 <a href="${websites.url}">Gå till webbplats ></a>
                 <p>${websites.description}</p>
                 
-                <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editWeb(${websites.id},'${title}', '${url}', '${desc}')"><i class="far fa-edit"></i></button>
+                <div class="button-container-list">
+                    <button onClick="deleteWeb(${websites.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editWeb(${websites.id},'${title}', '${url}', '${desc}')"><i class="far fa-edit"></i></button>
+                </div>
             </div>
             `;
             })
