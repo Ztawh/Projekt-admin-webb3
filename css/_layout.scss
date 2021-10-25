@@ -11,6 +11,11 @@ main {
     width: fit-content;
     max-width: 900px;
     margin: 2rem auto;
+    padding: 0 1rem 2rem 1rem;
+
+    @include mobile {
+        padding: 0 0 1rem 0;
+    }
 }
 
 .flex-container {
@@ -32,6 +37,8 @@ h2, h3, h4, h5 {
     font-weight: 300;
 }
 
+
+
 #h2-header {
     color: white;
     font-size: 2rem;
@@ -42,7 +49,9 @@ header {
     padding: 3rem;
 }
 
-
+.hide-on-desktop {
+    display: none;
+}
 
 // Logga in-sida
 #login-body {
@@ -51,6 +60,14 @@ header {
     animation: gradient 15s ease infinite;
     min-height: 100vh;
 
+    @include mobile {
+        header {
+            padding: 1rem;
+            h1 {
+                font-size: 2.8rem;
+            }
+        }
+    }
 }
 
 #intro {
@@ -63,11 +80,38 @@ header {
     p {
         margin-top: 1rem;
     }
+
+    @include mobile {
+        padding: 2rem;
+    }
+}
+
+#login-main {
+    @include small-table {
+        flex-direction: column;
+        padding: 0 1rem 1rem 1rem;
+        margin-top: 1rem;
+
+        #intro {
+            margin: 0;
+            margin-bottom: 2rem;
+        }
+    }
 }
 
 // Logga in-formulär
 #login-container {
     color: white;
+    max-width: 400px;
+    
+    
+    @include small-table{
+        margin: auto;
+
+        input {
+            width: 100%;
+        }
+    }
 }
 
 // Formulär
@@ -132,10 +176,25 @@ textarea {
     text-align: right;
     color: white;
 
+    @include mobile {
+        padding: 3.5rem 0 2rem 0;
+    }
+
+    
+
     h1 {
         font-size: 3rem;
         font-weight: 400;
         text-align: right;
+    }
+
+    @include mobile {
+        text-align: center;
+
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+        }
     }
 }
 
@@ -173,8 +232,20 @@ nav {
         right: 1rem;
         top: -3px;
         width: 80px;
-        background: white;
-        color: $submit-color;
+        // background: white;
+        // color: $submit-color;
+        background: $submit-color;
+        color: white;
+
+        @include mobile {
+            top: -185px;
+        }
+
+        @include desktop {
+            &:hover {
+                background: $submit-hover;
+            }
+        }
     }
 }
 
@@ -218,22 +289,39 @@ section {
     }
 
     h3 {
-        background: $submit-color;
+        background: $submit-hover;
         color: white;
-        padding: 0.5rem;
-        font-size: 1.5rem;
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
+        font-size: 1.7rem;
     }
 
     h4 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
+        font-weight: 400;
     }
 
     h5 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .delete {
         color: $danger;
+
+        @include desktop {
+            &:hover {
+                color: $danger-hover;
+            }
+        }
+    }
+
+    .fa-edit {
+        color: $submit-color;
+
+        @include desktop {
+            &:hover {
+                color: $submit-hover;
+            }
+        }
     }
 
     button {
@@ -262,6 +350,10 @@ section {
         padding: 1rem;
         position: relative;
 
+        @include mobile {
+            padding: 1rem 1rem 3rem 1rem;
+        }
+
         p {
             margin: 1rem 0 1.5rem 0;
         }
@@ -289,6 +381,31 @@ section {
         background: $form-background-color;
         border-left: solid 10px $submit-color;
         border-right: solid 10px $submit-color;
+        min-width: 300px;
+
+        @include small-table {
+            border-left: unset;
+            border-right: unset;
+            border-top: solid 10px $submit-color;
+        }
+
+        @include mobile {
+            .flex-container {
+                flex-direction: column;
+            }
+
+            .checkbox {
+                flex-direction: row;
+            }
+
+            .margin-left {
+                margin: 0;
+            }
+
+            input {
+                width: 100%;
+            }
+        }
     
         padding: 0 1rem 1rem 1rem;
         width: fit-content;
@@ -297,6 +414,10 @@ section {
         h3 {
             background: none;
             color: $submit-color;
+
+            @include mobile {
+                text-align: center;
+            }
         }
 
         .button-container {
@@ -323,13 +444,28 @@ section {
     }
 }
 
+// Lägg till-formulär på tablet/mobil
+details {
+    @extend aside;
+    padding: 0.5rem;
+
+    .details-content {
+        max-width: 500px;
+        margin: 1rem auto;
+    }
+
+    h2 {
+        margin: 0;
+        display: inline-block;
+    }
+}
 
 // Tabell
 table {
     // Ta bort vit linje mellan alla td
     overflow: auto;
     border-collapse: collapse;
-    width: 900px;
+    // width: 900px;
 
     // Gör varannan rad mörkare
     tbody:nth-of-type(even){
@@ -340,15 +476,83 @@ table {
 
     th {
         text-align: left;
+        font-weight: 400;
+        padding: 0.5rem;
+        width: 40%;
     }
 
     td {
-        padding: 0.3rem;
+        padding: 0.5rem;
+        width: 40%;
+    }
+
+    .school-table {
+        width: 20%;
+    }
+
+    .code-table {
+        width: 10%;
+    }
+
+    .center {
+        text-align: center;
+        width: 10%;
     }
 }
 
+// Tabell på enheter mindre än 700px
+@include small-table {
 
+    table {
+        width: 100%;
 
+        .center {
+            text-align: unset;
+        }
+    }
+
+    th {
+        display: none;
+    }
+
+    td {
+        display: block;
+        width: 100% !important;
+    }
+
+    .school-title, .code-title, .name-title, .start-title, .end-title {
+        text-align: left;
+    }
+
+    .school-title::before {
+        content: "Skola: ";
+        font-weight: bold;
+    }
+
+    .code-title::before {
+        content: "Kurskod: ";
+        font-weight: bold;
+    }
+
+    .name-title::before {
+        content: "Kursnamn: ";
+        font-weight: bold;
+    }
+
+    .start-title::before {
+        content: "Start år/månad: ";
+        font-weight: bold;
+    }
+
+    .end-title::before {
+        content: "Slut år/månad: ";
+        font-weight: bold;
+    }
+
+    .buttons-right {
+        text-align: right !important;
+    }
+}
 
 // footer
 footer {
@@ -364,7 +568,22 @@ footer {
 #admin-footer {
     background: $submit-color;
     position: relative;
+}
 
+// Media
+
+@include tablet {
+    .hide-on-tablet {
+        display: none;
+    }
+
+    .hide-on-desktop {
+        display: initial;
+    }
+
+    #container {
+        flex-direction: column;
+    }
 }
 
 // Animering

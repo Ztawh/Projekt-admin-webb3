@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://necolas.github.io/normalize.css/8.0.1/normalize.css");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Roboto&display=swap");
 * {
@@ -10,7 +11,7 @@ body {
   background: white;
   position: relative;
   font-family: "Roboto", sans-serif;
-  color: #023b5f;
+  color: #3b0072;
   line-height: 1.5;
 }
 
@@ -18,6 +19,12 @@ main {
   width: fit-content;
   max-width: 900px;
   margin: 2rem auto;
+  padding: 0 1rem 2rem 1rem;
+}
+@media screen and (max-width: 500px) {
+  main {
+    padding: 0 0 1rem 0;
+  }
 }
 
 .flex-container {
@@ -49,11 +56,23 @@ header {
   padding: 3rem;
 }
 
+.hide-on-desktop {
+  display: none;
+}
+
 #login-body {
   background: linear-gradient(-45deg, #3b0072, #198cd8, #4cc6db, #198cd8);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   min-height: 100vh;
+}
+@media screen and (max-width: 500px) {
+  #login-body header {
+    padding: 1rem;
+  }
+  #login-body header h1 {
+    font-size: 2.8rem;
+  }
 }
 
 #intro {
@@ -66,9 +85,35 @@ header {
 #intro p {
   margin-top: 1rem;
 }
+@media screen and (max-width: 500px) {
+  #intro {
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #login-main {
+    flex-direction: column;
+    padding: 0 1rem 1rem 1rem;
+    margin-top: 1rem;
+  }
+  #login-main #intro {
+    margin: 0;
+    margin-bottom: 2rem;
+  }
+}
 
 #login-container {
   color: white;
+  max-width: 400px;
+}
+@media screen and (max-width: 700px) {
+  #login-container {
+    margin: auto;
+  }
+  #login-container input {
+    width: 100%;
+  }
 }
 
 label, input {
@@ -103,16 +148,16 @@ textarea {
 }
 
 .submit-btn, section form .abort-btn {
-  background: #023b5f;
+  background: #3b0072;
   color: white;
   padding: 0.3rem;
   width: 100%;
   margin-top: 0.5rem;
   transition: 0.2s;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .submit-btn:hover, section form .abort-btn:hover {
-    background: #015386;
+    background: #198cd8;
     cursor: pointer;
   }
 }
@@ -123,10 +168,24 @@ textarea {
   text-align: right;
   color: white;
 }
+@media screen and (max-width: 500px) {
+  #header-admin {
+    padding: 3.5rem 0 2rem 0;
+  }
+}
 #header-admin h1 {
   font-size: 3rem;
   font-weight: 400;
   text-align: right;
+}
+@media screen and (max-width: 500px) {
+  #header-admin {
+    text-align: center;
+  }
+  #header-admin h1 {
+    text-align: center;
+    font-size: 2.8rem;
+  }
 }
 
 nav {
@@ -145,9 +204,9 @@ nav ul li a {
   display: flex;
   transition: 0.2s;
   text-decoration: none;
-  color: #023b5f;
+  color: #3b0072;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   nav ul li a:hover {
     background: #eee;
   }
@@ -157,25 +216,35 @@ nav #logout-btn {
   right: 1rem;
   top: -3px;
   width: 80px;
-  background: white;
-  color: #023b5f;
+  background: #3b0072;
+  color: white;
+}
+@media screen and (max-width: 500px) {
+  nav #logout-btn {
+    top: -185px;
+  }
+}
+@media screen and (min-width: 900px) {
+  nav #logout-btn:hover {
+    background: #198cd8;
+  }
 }
 
-aside {
+aside, details {
   background: #eee;
   padding: 1.5rem;
 }
-aside form {
+aside form, details form {
   margin-bottom: 2rem;
 }
-aside form input {
+aside form input, details form input {
   width: 100%;
 }
-aside h2 {
+aside h2, details h2 {
   margin-bottom: 1rem;
 }
-aside h3 {
-  border-bottom: solid 3px #015386;
+aside h3, details h3 {
+  border-bottom: solid 3px #198cd8;
 }
 
 .margin-left {
@@ -192,19 +261,33 @@ section h2 {
   letter-spacing: 2px;
 }
 section h3 {
-  background: #023b5f;
+  background: #198cd8;
   color: white;
-  padding: 0.5rem;
-  font-size: 1.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  font-size: 1.7rem;
 }
 section h4 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 section h5 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 section .delete {
   color: #b43616;
+}
+@media screen and (min-width: 900px) {
+  section .delete:hover {
+    color: #e1441c;
+  }
+}
+section .fa-edit {
+  color: #3b0072;
+}
+@media screen and (min-width: 900px) {
+  section .fa-edit:hover {
+    color: #198cd8;
+  }
 }
 section button {
   border: none;
@@ -214,17 +297,22 @@ section button {
 section button i {
   font-size: 1.2rem;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   section button:hover {
     cursor: pointer;
   }
 }
 section .job:nth-of-type(odd), section .website:nth-of-type(odd) {
-  background: #cee9f7;
+  background: #dceefb;
 }
 section .job, section .website {
   padding: 1rem;
   position: relative;
+}
+@media screen and (max-width: 500px) {
+  section .job, section .website {
+    padding: 1rem 1rem 3rem 1rem;
+  }
 }
 section .job p, section .website p {
   margin: 1rem 0 1.5rem 0;
@@ -236,15 +324,42 @@ section .job .button-container-list, section .website .button-container-list {
 }
 section form {
   background: #eee;
-  border-left: solid 10px #023b5f;
-  border-right: solid 10px #023b5f;
+  border-left: solid 10px #3b0072;
+  border-right: solid 10px #3b0072;
+  min-width: 300px;
   padding: 0 1rem 1rem 1rem;
   width: fit-content;
   margin: 2rem auto 0 auto;
 }
+@media screen and (max-width: 700px) {
+  section form {
+    border-left: unset;
+    border-right: unset;
+    border-top: solid 10px #3b0072;
+  }
+}
+@media screen and (max-width: 500px) {
+  section form .flex-container {
+    flex-direction: column;
+  }
+  section form .checkbox {
+    flex-direction: row;
+  }
+  section form .margin-left {
+    margin: 0;
+  }
+  section form input {
+    width: 100%;
+  }
+}
 section form h3 {
   background: none;
-  color: #023b5f;
+  color: #3b0072;
+}
+@media screen and (max-width: 500px) {
+  section form h3 {
+    text-align: center;
+  }
 }
 section form .button-container {
   margin-top: 1rem;
@@ -257,27 +372,102 @@ section form button {
 section form .abort-btn {
   background: #b43616;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   section form .abort-btn:hover {
-    background: #9d2f13;
+    background: #e1441c;
   }
+}
+
+details {
+  padding: 0.5rem;
+}
+details .details-content {
+  max-width: 500px;
+  margin: 1rem auto;
+}
+details h2 {
+  margin: 0;
+  display: inline-block;
 }
 
 table {
   overflow: auto;
   border-collapse: collapse;
-  width: 900px;
 }
 table tbody:nth-of-type(even) tr {
-  background: #cee9f7;
+  background: #dceefb;
 }
 table th {
   text-align: left;
+  font-weight: 400;
+  padding: 0.5rem;
+  width: 40%;
 }
 table td {
-  padding: 0.3rem;
+  padding: 0.5rem;
+  width: 40%;
+}
+table .school-table {
+  width: 20%;
+}
+table .code-table {
+  width: 10%;
+}
+table .center {
+  text-align: center;
+  width: 10%;
 }
 
+@media screen and (max-width: 700px) {
+  table {
+    width: 100%;
+  }
+  table .center {
+    text-align: unset;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .school-title, .code-title, .name-title, .start-title, .end-title {
+    text-align: left;
+  }
+
+  .school-title::before {
+    content: "Skola: ";
+    font-weight: bold;
+  }
+
+  .code-title::before {
+    content: "Kurskod: ";
+    font-weight: bold;
+  }
+
+  .name-title::before {
+    content: "Kursnamn: ";
+    font-weight: bold;
+  }
+
+  .start-title::before {
+    content: "Start år/månad: ";
+    font-weight: bold;
+  }
+
+  .end-title::before {
+    content: "Slut år/månad: ";
+    font-weight: bold;
+  }
+
+  .buttons-right {
+    text-align: right !important;
+  }
+}
 footer {
   color: white;
   text-align: center;
@@ -289,10 +479,23 @@ footer {
 }
 
 #admin-footer {
-  background: #023b5f;
+  background: #3b0072;
   position: relative;
 }
 
+@media screen and (max-width: 900px) {
+  .hide-on-tablet {
+    display: none;
+  }
+
+  .hide-on-desktop {
+    display: initial;
+  }
+
+  #container {
+    flex-direction: column;
+  }
+}
 @keyframes gradient {
   0% {
     background-position: 0% 50%;

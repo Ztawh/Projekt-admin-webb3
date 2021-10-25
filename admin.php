@@ -31,7 +31,83 @@ if (isset($_SESSION["adminloggedin"])) {
 
         <div id="container" class="flex-container">
 
-            <aside>
+            <div class="hide-on-desktop">
+                <details>
+                    <summary>
+                        <h2>Lägg till +</h2>
+                    </summary>
+
+                    <div class="details-content">
+                        <h3>Lägg till kurs</h3>
+                        <form id="course-form">
+                            <label for="school">Skola</label>
+                            <input type="text" name="school" id="school" placeholder="Mittuniversitetet" required>
+
+                            <label for="code">Kurskod</label>
+                            <input type="text" name="code" id="code" placeholder="DT173G" required>
+
+                            <label for="name">Kursnamn</label>
+                            <input type="text" name="name" id="name" placeholder="Webbutveckling III" required>
+
+                            <label for="start-date-course">Start - år/månad</label>
+                            <input type="month" name="start-date-course" id="start-date-course" placeholder="2021-08" required>
+
+                            <label for="end-date-course">Slut - år/månad</label>
+                            <input type="month" name="end-date-course" id="end-date-course" placeholder="2021-10">
+
+                            <div class="flex-container checkbox">
+                                <label for="now-course">Nuvarande kurs</label>
+                                <input type="checkbox" name="now-course" id="now-course">
+                            </div>
+
+                            <input type="submit" value="Lägg till" id="add-course" class="submit-btn">
+                        </form>
+                    </div>
+                    <div class="details-content">
+                        <h3>Lägg till anställning</h3>
+                        <form id="job-form">
+                            <label for="workplace">Arbetsplats</label>
+                            <input type="text" name="workplace" id="workplace" placeholder="Målaranders AB">
+
+                            <label for="role">Roll</label>
+                            <input type="text" name="role" id="role" placeholder="Målare">
+
+                            <label for="start-date-job">Start - år/månad</label>
+                            <input type="month" name="start-date-job" id="start-date-job" placeholder="2021-09">
+
+                            <label for="end-date-job">Slut år/månad</label>
+                            <input type="month" name="end-date-job" id="end-date-job" placeholder="2021-12">
+
+                            <label for="desc-job">Beskrivning</label>
+                            <textarea name="desc-job" id="desc-job" cols="30" rows="10"></textarea>
+
+                            <div class="flex-container checkbox">
+                                <label for="now-job">Nuvarande anställning</label>
+                                <input type="checkbox" name="now-job" id="now-job">
+                            </div>
+
+                            <input type="submit" value="Lägg till" id="add-job" class="submit-btn">
+                        </form>
+                    </div>
+                    <div class="details-content">
+                        <h3>Lägg till webbsida</h3>
+                        <form id="website-form">
+                            <label for="title">Titel</label>
+                            <input type="text" name="title" id="title" placeholder="Youtube">
+
+                            <label for="url">Webblänk</label>
+                            <input type="text" name="url" id="url" placeholder="https://example.com">
+
+                            <label for="desc-web">Beskrivning</label>
+                            <textarea name="desc-web" id="desc-web" cols="30" rows="10"></textarea>
+
+                            <input type="submit" value="Lägg till" id="add-website" class="submit-btn">
+                        </form>
+                    </div>
+                </details>
+            </div>
+
+            <aside class="hide-on-tablet">
                 <h2>Lägg till innehåll</h2>
                 <div>
                     <h3>Lägg till kurs</h3>

@@ -79,12 +79,13 @@ function getCourses() {
         .then(data => {
             coursesEl.innerHTML += `
             <tr>
-                <th>Skola</th>
-                <th>Kurskod</th>
+                <th class="school-table">Skola</th>
+                <th class="code-table">Kurskod</th>
                 <th>Kursnamn</th>
-                <th>Start - år/månad</th>
-                <th>Slut - år/månad</th>
-                <th>Radera/Redigera</th>
+                
+                <th class="center">Start - år/månad</th>
+                <th class="center">Slut - år/månad</th>
+                <th class="center">Radera/Redigera</th>
             </tr>
         `;
             data.forEach(courses => {
@@ -102,7 +103,7 @@ function getCourses() {
 
                 //let school = escapeHtml(courses.school);
 
-                // Tar bort eventuella enkelfnuttar i strängen
+                // Ersätt eventuella enkelfnuttar i strängen med \
                 let school = courses.school;
                 let courseId = courses.course_id;
                 let name = courses.name;
@@ -114,12 +115,13 @@ function getCourses() {
                 coursesEl.innerHTML +=
                     `
             <tr>
-                <td>${courses.school}</td>
-                <td>${courses.course_id}</td>
-                <td>${courses.name}</td>
-                <td>${startDate}</td>
-                <td>${endDate}</td>
-                <td><button onClick="deleteCourse(${courses.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editCourse(${courses.id}, '${school}', '${courseId}', '${name}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button></td>
+                <td class="school-table school-title">${courses.school}</td>
+                <td class="code-table code-title">${courses.course_id}</td>
+                <td class="name-title">${courses.name}</td>
+    
+                <td class="center start-title">${startDate}</td>
+                <td class="center end-title">${endDate}</td>
+                <td class="center buttons-right"><button onClick="deleteCourse(${courses.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editCourse(${courses.id}, '${school}', '${courseId}', '${name}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button></td>
                 
             </tr>
             `;
@@ -365,7 +367,7 @@ function getJobs() {
                 <h4>${jobs.workplace}</h4>
                 <h5>${jobs.title}</h5>
                 <p>${jobs.description}</p>
-                <span>Period: ${startDate} till </span>
+                <span><b>Period: </b> ${startDate} till </span>
                 <span>${endDate}</span>
                 <div class="button-container-list">
                     <button onClick="deleteJob(${jobs.id})"><i class="fas fa-trash-alt delete"></i></button><button onClick="editJob(${jobs.id}, '${workplace}', '${title}', '${desc}', '${startDate}', '${endDate}')"><i class="far fa-edit"></i></button>
@@ -663,11 +665,18 @@ function editWeb(id, title, url, desc) {
     editWebEl.innerHTML = `
     <form id="edit-web-form">
         <h3>redigera webbsida</h3>
-        <label for="title-edit">Titel</label>
-        <input type="text" name="title-edit" id="title-edit" value="${title}" required>
 
-        <label for="url-edit">Webblänk</label>
-        <input type="text" name="url-edit" id="url-edit" value="${url}" required>
+        <div class="flex-container">
+            <div>
+                <label for="title-edit">Titel</label>
+                <input type="text" name="title-edit" id="title-edit" value="${title}" required>
+            </div>
+
+            <div class="margin-left">
+                <label for="url-edit">Webblänk</label>
+                <input type="text" name="url-edit" id="url-edit" value="${url}" required>
+            </div>
+        </div>
 
         <label for="desc-web-edit">Beskrivning</label>
         <textarea name="desc-web-edit" id="desc-web-edit" cols="30" rows="10">${desc}</textarea>
