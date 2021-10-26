@@ -22,6 +22,7 @@ main {
     display: flex;
 }
 
+// Rubriker
 h1, h2, h3, h4, h5 {
     font-family: 'Oswald', sans-serif;
 }
@@ -37,8 +38,7 @@ h2, h3, h4, h5 {
     font-weight: 300;
 }
 
-
-
+// Header
 #h2-header {
     color: white;
     font-size: 2rem;
@@ -49,12 +49,9 @@ header {
     padding: 3rem;
 }
 
-.hide-on-desktop {
-    display: none;
-}
-
 // Logga in-sida
 #login-body {
+    // Animerar stor bakgrund med gradient som åker fram och tillbaka
     background: $login-page-gradient;
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
@@ -86,6 +83,7 @@ header {
     }
 }
 
+// Main-element i index
 #login-main {
     @include small-table {
         flex-direction: column;
@@ -103,7 +101,6 @@ header {
 #login-container {
     color: white;
     max-width: 400px;
-    
     
     @include small-table{
         margin: auto;
@@ -139,7 +136,6 @@ textarea {
 
 // Checkrutor
 .checkbox {
-    // display: inline-block;
     label, input {
         width: fit-content;
         margin: 0.5rem;
@@ -151,6 +147,7 @@ textarea {
     }
 }
 
+// Knappar
 .submit-btn {
     background: $submit-color;
     color: white;
@@ -179,8 +176,6 @@ textarea {
     @include mobile {
         padding: 3.5rem 0 2rem 0;
     }
-
-    
 
     h1 {
         font-size: 3rem;
@@ -232,8 +227,6 @@ nav {
         right: 1rem;
         top: -3px;
         width: 80px;
-        // background: white;
-        // color: $submit-color;
         background: $submit-color;
         color: white;
 
@@ -249,31 +242,7 @@ nav {
     }
 }
 
-// Aside
-
-aside {
-    background: $form-background-color;
-    padding: 1.5rem;
-
-    form {
-        margin-bottom: 2rem;
-
-        input {
-            width: 100%;
-        }
-    }
-
-    h2 {
-        margin-bottom: 1rem;
-    }
-
-    h3 {
-        border-bottom: solid 3px $submit-hover;
-    }
-}
-
 // Admin-main
-
 .margin-left {
     margin-left: 1rem;
 }
@@ -304,6 +273,22 @@ section {
         font-size: 1.2rem;
     }
 
+    // Länkar
+    a {
+        color: $blue;
+        transition: 0.2s;
+
+        &:visited {
+            color: $visited-color;
+        }
+
+        @include desktop {
+            &:hover {
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+
     .delete {
         color: $danger;
 
@@ -314,6 +299,7 @@ section {
         }
     }
 
+    // Redigera-ikon
     .fa-edit {
         color: $submit-color;
 
@@ -324,11 +310,13 @@ section {
         }
     }
 
+    // Knappar i redigeringsformulär
     button {
         border: none;
         background: transparent;
         margin: 0 0.5rem;
         
+        // Ikoner
         i {
             font-size: 1.2rem;
         }
@@ -340,8 +328,8 @@ section {
         }
     }
 
-
-    // Anställningar
+    // Anställningar och webbsidor
+    // Gör varannan blå. Jobb och webbsidor
     .job:nth-of-type(odd), .website:nth-of-type(odd) {
         background: $light-blue; 
     }
@@ -358,25 +346,15 @@ section {
             margin: 1rem 0 1.5rem 0;
         }
 
+        // Sätter rediga- och radera-knapp längst ned i högra hörnet
         .button-container-list {
             position: absolute;
             right: 0.5rem;
             bottom: 1rem;
-
-            // .delete, .fa-edit {
-            //     transition: 0.5s;
-            //     @include desktop {
-            //         &:hover {
-            //             margin-bottom: 0.4rem;
-            //         }
-            //     }
-            // }
         }
-
-        
     }
 
-    // Redigeringsfomrulär
+    // Redigeringsformulär
     form {
         background: $form-background-color;
         border-left: solid 10px $submit-color;
@@ -424,14 +402,15 @@ section {
             margin-top: 1rem;
         }
         
-
         button {
             border-radius: 15px;
             border: none;
             margin: 0 0.2rem;
         }
 
+        // Avbryt-knapp
         .abort-btn {
+            // Ärver regler från submit-knappar
             @extend .submit-btn;
             background: $danger;
 
@@ -446,17 +425,30 @@ section {
 
 // Lägg till-formulär på tablet/mobil
 details {
-    @extend aside;
-    padding: 0.5rem;
+    background: $form-background-color;
+    padding: 1.5rem;
+    height: 100%;
 
-    .details-content {
-        max-width: 500px;
-        margin: 1rem auto;
+    form {
+        margin-bottom: 2rem;
+
+        input {
+            width: 100%;
+        }
     }
 
     h2 {
         margin: 0;
         display: inline-block;
+    }
+
+    h3 {
+        border-bottom: solid 3px $submit-hover;
+    }
+
+    .details-content {
+        max-width: 500px;
+        margin: 1rem auto;
     }
 }
 
@@ -465,7 +457,6 @@ table {
     // Ta bort vit linje mellan alla td
     overflow: auto;
     border-collapse: collapse;
-    // width: 900px;
 
     // Gör varannan rad mörkare
     tbody:nth-of-type(even){
@@ -502,7 +493,6 @@ table {
 
 // Tabell på enheter mindre än 700px
 @include small-table {
-
     table {
         width: 100%;
 
@@ -524,6 +514,7 @@ table {
         text-align: left;
     }
 
+    // Ersätter titlarna med before
     .school-title::before {
         content: "Skola: ";
         font-weight: bold;
@@ -570,17 +561,36 @@ footer {
     position: relative;
 }
 
+// Intruder-sida
+
+#intruder-body {
+    position: relative;
+    height: 100vh;
+}
+
+#intruder{
+    max-width: 500px;
+    text-align: center;
+    #intruder-h1 {
+        color: $danger;
+    }
+
+
+    a {
+        color: $blue;
+        display: block;
+        margin-top: 2rem;
+    }
+}
+
+#intruder-footer {
+    color: $submit-color;
+}
+
+
+
 // Media
-
 @include tablet {
-    .hide-on-tablet {
-        display: none;
-    }
-
-    .hide-on-desktop {
-        display: initial;
-    }
-
     #container {
         flex-direction: column;
     }

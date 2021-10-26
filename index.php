@@ -2,13 +2,14 @@
 include("includes/header.php");
 $message = "";
 
+// Kontrollerar angivet användarnamn och lösenord
 if (isset($_POST["login"])) {
-    if ($_POST["user"] == "admin" && $_POST["password"] == "lösen") {
+    if ($_POST["user"] == "admin" && $_POST["password"] == "hemligtlösen") {
         $_SESSION["adminloggedin"] = "loggedin";
         echo $_SESSION["adminloggedin"];
         header("Location: admin.php");
     } else {
-        $message = "Gick inte!";
+        $message = "Felaktigt användarnamn<br>eller lösenord!";
     }
 }
 ?>
@@ -19,8 +20,9 @@ if (isset($_POST["login"])) {
         <h2 id="h2-header">amandas portfolio</h2>
     </header>
 
-
+    <!-- Main -->
     <main class="flex-container" id="login-main">
+        <!-- Hälsning -->
         <div id="intro">
             <h2>Hej!</h2>
             <p>Du har kommit till administrationssidan för Amandas
@@ -33,9 +35,10 @@ if (isset($_POST["login"])) {
                 att du inte är behörig att administrera sidan!</p>
         </div>
 
+        <!-- Logga in-formulär -->
         <div id="login-container">
             <h2>Logga in</h2>
-            <?php echo $message ?>
+            <span><?php echo $message ?></span>
             <form method="POST" action="index.php">
                 <label for="user">användarnamn</label>
                 <input type="text" id="user" name="user">
@@ -47,10 +50,9 @@ if (isset($_POST["login"])) {
 
             </form>
         </div>
-
-
     </main>
 
+    <!-- Footer -->
     <footer>
 <?php
 include("includes/footer.php");
