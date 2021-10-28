@@ -43,7 +43,7 @@ if (isset($_SESSION["adminloggedin"])) {
                             <label for="school">Skola</label>
                             <input type="text" name="school" id="school" placeholder="Mittuniversitetet" required>
 
-                            <label for="code">Kurskod</label>
+                            <label for="code">Kurskod (max 8 tecken)</label>
                             <input type="text" name="code" id="code" placeholder="DT173G" required>
 
                             <label for="name">Kursnamn</label>

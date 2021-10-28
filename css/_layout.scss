@@ -200,6 +200,7 @@ nav {
     position: sticky;
     top: 0;
     background: white;
+    z-index: 999;
 
     ul {
         list-style-type: none;
@@ -586,8 +587,6 @@ footer {
 #intruder-footer {
     color: $submit-color;
 }
-
-
 
 // Media
 @include tablet {

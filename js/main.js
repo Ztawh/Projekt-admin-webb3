@@ -173,6 +173,12 @@ function addCourse() {
         }
     }
 
+    // Kontrollera om kurkoden är för lång
+    if(code.length > 8){
+        alert("Kurskoden får vara max 8 tecken.");
+        return false;
+    }
+
     // Lägg värden i objekt
     let course = { "school": school, "course_id": code, "name": name, "start_date": start, "end_date": end };
 
@@ -594,7 +600,7 @@ function getPortfolio() {
                     `
             <div class="website">
                 <h4>${websites.title}</h4>
-                <a href="${websites.url}">Gå till webbplats ></a>
+                <a href="${websites.url}" target="_blank">Gå till webbplats ></a>
                 <p>${websites.description}</p>
                 
                 <div class="button-container-list">
