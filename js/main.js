@@ -74,7 +74,7 @@ function getCourses() {
     coursesEl.innerHTML = "";
 
     // Hämta alla kurser från webbtjänsten med fetch
-    fetch("http://localhost:8080/projekt-webbtjanst/courses.php")
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php")
         .then(response => response.json())
         .then(data => {
             coursesEl.innerHTML += `
@@ -138,6 +138,12 @@ function addCourse() {
     let start = startCourseInput.value;
     let end = endCourseInput.value;
 
+    // Kontrollerar om alla fält är ifyllda
+    if (school == "" || code == "" || name == "" || start == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
     // Kontrollera om formatet är rätt på datum
     if (/^\d{4}-\d{2}$/g.test(start)) {
         start += "-00";
@@ -162,10 +168,7 @@ function addCourse() {
         end = "0000-00-00";
     }
 
-    if (school == "" || code == "" || name == "" || start == "") {
-        alert("Alla fält måste fyllas i!");
-        return false;
-    }
+    
     if (end == "") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
@@ -185,7 +188,7 @@ function addCourse() {
     console.log(course);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till kursen. Samt skriv ut kurserna på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/courses.php", {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php", {
         method: "POST",
         body: JSON.stringify(course),
     })
@@ -205,7 +208,7 @@ function deleteCourse(id) {
     // Begär bekräftelse
     if (confirm("Är du säker på att du vill ta bort den här kursen?")) {
         // Skickar id till webbtjänsten som tar bort kursen, samt skriver ut kurserna på nytt
-        fetch("http://localhost:8080/projekt-webbtjanst/courses.php?id=" + id, {
+        fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php?id=" + id, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -317,7 +320,7 @@ function updateCourse(id) {
     console.log(course);
 
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/courses.php?id=" + id, {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php?id=" + id, {
         method: "PUT",
         body: JSON.stringify(course),
     })
@@ -343,7 +346,7 @@ function getJobs() {
     jobsEl.innerHTML = "";
 
     // Hämta alla kurser från webbtjänsten med fetch
-    fetch("http://localhost:8080/projekt-webbtjanst/jobs.php")
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php")
         .then(response => response.json())
         .then(data => {
             data.forEach(jobs => {
@@ -393,6 +396,12 @@ function addJob() {
     let start = startJobInput.value;
     let end = endJobInput.value;
 
+    // Kontrollerar att alla fält är ifyllda
+    if (workplace == "" || role == "" || desc == "" || start == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
     // Kontrollera om formatet är rätt på datum
     if (/^\d{4}-\d{2}$/g.test(start)) {
         start += "-00";
@@ -416,10 +425,7 @@ function addJob() {
         end = "0000-00-00";
     }
 
-    if (workplace == "" || role == "" || desc == "" || start == "") {
-        alert("Alla fält måste fyllas i!");
-        return false;
-    }
+    
 
     if (end == "") {
         if (!checkJob.checked) {
@@ -434,7 +440,7 @@ function addJob() {
     console.log(job);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till kursen. Samt skriv ut kurserna på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/jobs.php", {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php", {
         method: "POST",
         body: JSON.stringify(job),
     })
@@ -453,7 +459,7 @@ function deleteJob(id) {
     // Begär bekräftelse
     if (confirm("Är du säker på att du vill ta bort den här anställningen?")) {
         // Skickar id till webbtjänsten som tar bort anställningen, samt skriver ut anställningarna på nytt
-        fetch("http://localhost:8080/projekt-webbtjanst/jobs.php?id=" + id, {
+        fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php?id=" + id, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -563,7 +569,7 @@ function updateJob(id) {
     console.log(job);
 
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/jobs.php?id=" + id, {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php?id=" + id, {
         method: "PUT",
         body: JSON.stringify(job),
     })
@@ -583,7 +589,7 @@ function getPortfolio() {
     portfolioEl.innerHTML = "";
 
     // Hämta alla kurser från webbtjänsten med fetch
-    fetch("http://localhost:8080/projekt-webbtjanst/websites.php")
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php")
         .then(response => response.json())
         .then(data => {
             data.forEach(websites => {
@@ -630,7 +636,7 @@ function addWebsite() {
     console.log(website);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till webbsidan. Samt skriv ut portfolio på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/websites.php", {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php", {
         method: "POST",
         body: JSON.stringify(website),
     })
@@ -650,7 +656,7 @@ function deleteWeb(id) {
     // Begär bekräftelse
     if (confirm("Är du säker på att du vill ta bort den här webbsidan?")) {
         // Skickar id till webbtjänsten som tar bort anställningen, samt skriver ut anställningarna på nytt
-        fetch("http://localhost:8080/projekt-webbtjanst/websites.php?id=" + id, {
+        fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php?id=" + id, {
             method: "DELETE",
         })
             .then(response => response.json())
@@ -727,7 +733,7 @@ function updateWeb(id) {
     console.log(website);
 
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
-    fetch("http://localhost:8080/projekt-webbtjanst/websites.php?id=" + id, {
+    fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php?id=" + id, {
         method: "PUT",
         body: JSON.stringify(website),
     })
