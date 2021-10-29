@@ -96,7 +96,7 @@ if (isset($_SESSION["adminloggedin"])) {
                             <input type="text" name="title" id="title" placeholder="Youtube">
 
                             <label for="url">Webblänk</label>
-                            <input type="text" name="url" id="url" placeholder="https://example.com">
+                            <input type="url" name="url" id="url" pattern="https://.*" placeholder="https://example.com">
 
                             <label for="desc-web">Beskrivning</label>
                             <textarea name="desc-web" id="desc-web" cols="30" rows="10"></textarea>

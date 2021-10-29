@@ -58,6 +58,8 @@ header {
     min-height: 100vh;
 
     @include mobile {
+        animation: gradient 10s ease infinite;
+
         header {
             padding: 1rem;
             h1 {
@@ -555,6 +557,11 @@ footer {
     bottom: 0;
     right: 0;
     left: 0;
+
+    @include mobile{
+        position: relative;
+    }
+    
 }
 
 #admin-footer {
