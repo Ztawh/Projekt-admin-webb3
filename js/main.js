@@ -39,7 +39,7 @@ window.addEventListener("load", getCourses);
 window.addEventListener("load", getJobs);
 window.addEventListener("load", getPortfolio);
 
-// Lägg till-/spara-knappar
+// Lägg till-knappar
 courseBtn.addEventListener("click", function (e) {
     e.preventDefault();
     addCourse();
@@ -56,18 +56,6 @@ webBtn.addEventListener("click", function (e) {
 });
 
 // Funktioner
-
-// function HtmlEncode(s)
-// {
-//   var el = document.createElement("div");
-//   el.innerText = el.textContent = s;
-//   s = el.innerHTML;
-//   return s;
-// }
-
-// function escapeHtml(str) {
-//     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-// }
 
 // Hämta alla kurser
 function getCourses() {
@@ -100,8 +88,6 @@ function getCourses() {
                 // Ta bort sista tre tecken så endast år och månad skrivs ut
                 let startDate = courses.start_date;
                 startDate = startDate.slice(0, -3);
-
-                //let school = escapeHtml(courses.school);
 
                 // Ersätt eventuella enkelfnuttar i strängen med \
                 let school = courses.school;
@@ -147,7 +133,6 @@ function addCourse() {
     // Kontrollera om formatet är rätt på datum
     if (/^\d{4}-\d{2}$/g.test(start)) {
         start += "-00";
-        console.log(start);
     } else {
         alert("Ange ett korrekt datumformat (YYYY-MM)");
         return false;
@@ -167,8 +152,8 @@ function addCourse() {
     if (checkCourse.checked) {
         end = "0000-00-00";
     }
-
     
+    // Kontrollera om slutdatum eller nuvarande kurs satt
     if (end == "") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
@@ -184,8 +169,6 @@ function addCourse() {
 
     // Lägg värden i objekt
     let course = { "school": school, "course_id": code, "name": name, "start_date": start, "end_date": end };
-
-    console.log(course);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till kursen. Samt skriv ut kurserna på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php", {
@@ -225,8 +208,7 @@ function deleteCourse(id) {
 
 // Redigera kurs
 function editCourse(id, school, code, name, start, end) {
-    console.log(school);
-
+    // Sätter end till tomt om det är nuvarande
     if (end == "0000-00-00" || end == "Nuvarande") {
         end = "";
     }
@@ -280,7 +262,9 @@ function editCourse(id, school, code, name, start, end) {
     });
 }
 
+// Uppdatera kurs
 function updateCourse(id) {
+    // Hämta värden från redigeringsformulär
     let schoolInputEdit = document.getElementById("school-edit");
     let codeInputEdit = document.getElementById("code-edit");
     let nameInputEdit = document.getElementById("name-edit");
@@ -294,9 +278,7 @@ function updateCourse(id) {
     let start = startInputEdit.value;
     let end = endInputEdit.value;
 
-    // start += "-00";
-    // end += "-00";
-
+    // Kontrollera om alla fält är ifyllda
     if (school == "" || code == "" || name == "" || start == "") {
         alert("Alla fält måste fyllas i!");
         return false;
@@ -305,7 +287,6 @@ function updateCourse(id) {
     // Kontrollera om formatet är rätt på datum
     if (/^\d{4}-\d{2}$/g.test(start)) {
         start += "-00";
-        console.log(start);
     } else {
         alert("Ange ett korrekt datumformat (YYYY-MM)");
         return false;
@@ -326,6 +307,7 @@ function updateCourse(id) {
         end = "0000-00-00";
     }
 
+    // Kontrollerar om nuvarande eller slutdatum är satt
     if (end == "") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
@@ -335,8 +317,6 @@ function updateCourse(id) {
 
     // Lägg värden i objekt
     let course = { "school": school, "course_id": code, "name": name, "start_date": start, "end_date": end };
-
-    console.log(course);
 
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/courses.php?id=" + id, {
@@ -354,6 +334,7 @@ function updateCourse(id) {
     abortEdit("edit-course");
 }
 
+// Avbryt redigering
 function abortEdit(formName) {
     let form = document.getElementById(formName);
     // Tar bort formuläret
@@ -444,8 +425,7 @@ function addJob() {
         end = "0000-00-00";
     }
 
-    
-
+    // Kontrollerar om nuvarande eller slutdatum är satt
     if (end == "") {
         if (!checkJob.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
@@ -455,8 +435,6 @@ function addJob() {
 
     // Lägg värden i objekt
     let job = { "workplace": workplace, "title": role, "description": desc, "start_date": start, "end_date": end };
-
-    console.log(job);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till kursen. Samt skriv ut kurserna på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php", {
@@ -474,6 +452,7 @@ function addJob() {
     jobForm.reset(); // Återställ formuläret
 }
 
+// Ta bort jobb
 function deleteJob(id) {
     // Begär bekräftelse
     if (confirm("Är du säker på att du vill ta bort den här anställningen?")) {
@@ -493,6 +472,7 @@ function deleteJob(id) {
     }
 }
 
+// Redigera jobb
 function editJob(id, workplace, title, desc, start, end) {
 
     if (end == "0000-00-00" || end == "Nuvarande") {
@@ -548,7 +528,9 @@ function editJob(id, workplace, title, desc, start, end) {
     });
 }
 
+// Uppdatera jobb
 function updateJob(id) {
+    // Hämta nya värden från redigeringsformulär
     let workplaceInputEdit = document.getElementById("workplace-edit");
     let roleInputEdit = document.getElementById("role-edit");
     let descInputEdit = document.getElementById("desc-job-edit");
@@ -561,9 +543,6 @@ function updateJob(id) {
     let desc = descInputEdit.value;
     let start = startInputEdit.value;
     let end = endInputEdit.value;
-
-    // start += "-00";
-    // end += "-00";
 
     // Kontrollerar om alla fält är ifyllda
     if (workplace == "" || role == "" || desc == "" || start == "") {
@@ -594,6 +573,7 @@ function updateJob(id) {
         end = "0000-00-00";
     }
 
+    // Kontrollerar om nuvarande eller slutdatum är satt 
     if (end == "") {
         if (!checkEdit.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
@@ -603,8 +583,6 @@ function updateJob(id) {
 
     // Lägg värden i objekt
     let job = { "workplace": workplace, "title": role, "description": desc, "start_date": start, "end_date": end };
-
-    console.log(job);
 
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/jobs.php?id=" + id, {
@@ -663,6 +641,7 @@ function addWebsite() {
     let url = urlInput.value;
     let desc = descWeb.value;
 
+    // Kontrollerar att alla fält är ifyllda
     if (title == "" || url == "" || desc == "") {
         alert("Alla fält måste fyllas i!");
         return false;
@@ -670,8 +649,6 @@ function addWebsite() {
 
     // Lägg värden i objekt
     let website = { "title": title, "url": url, "description": desc };
-
-    console.log(website);
 
     // Gör objektet till json och skickar till webbtjänsten som lägger till webbsidan. Samt skriv ut portfolio på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php", {
@@ -709,6 +686,7 @@ function deleteWeb(id) {
     }
 }
 
+// Redigera webbsida
 function editWeb(id, title, url, desc) {
     // Tar emot värden från klickad anställning
     // Genererar ett formulär som är förifyllt med de nuvarande värdena
@@ -749,6 +727,7 @@ function editWeb(id, title, url, desc) {
     });
 }
 
+// Uppdatera webbsida
 function updateWeb(id) {
     // Hämtar värden från redigera-formuläret
     let titleInputEdit = document.getElementById("title-edit");
@@ -768,8 +747,6 @@ function updateWeb(id) {
     // Lägg värden i objekt
     let website = { "title": title, "url": url, "description": desc };
 
-    console.log(website);
-
     // Skickar id till webbtjänsten samt nya värden för den kursen, webbtjänsten uppdaterar. Samt skriver ut kurser på nytt
     fetch("https://studenter.miun.se/~amhv2000/writeable/projekt-webbtjanst/websites.php?id=" + id, {
         method: "PUT",
@@ -783,5 +760,5 @@ function updateWeb(id) {
             console.log("Error: ", error);
         });
 
-    abortEdit("edit-web");
+    abortEdit("edit-web"); // Nollställ formulär
 }

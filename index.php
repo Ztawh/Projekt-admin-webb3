@@ -3,10 +3,10 @@ include("includes/header.php");
 $message = "";
 
 // Kontrollerar angivet användarnamn och lösenord
+// Om rätt, sätt session-variabel
 if (isset($_POST["login"])) {
     if ($_POST["user"] == "admin" && $_POST["password"] == "hemligtlösen") {
         $_SESSION["adminloggedin"] = "loggedin";
-        echo $_SESSION["adminloggedin"];
         header("Location: admin.php");
     } else {
         $message = "Felaktigt användarnamn<br>eller lösenord!";
@@ -15,6 +15,7 @@ if (isset($_POST["login"])) {
 ?>
 
 <body id="login-body">
+    <!-- Header -->
     <header>
         <h1>administration</h1>
         <h2 id="h2-header">amandas portfolio</h2>

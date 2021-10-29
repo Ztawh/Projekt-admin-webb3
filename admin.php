@@ -6,17 +6,18 @@ if (isset($_POST["logout"])) {
     header("Location: index.php");
 }
 
+// Om session-variabel är satt, skriv ut admin-innehåll. Annars skriv ut intruder-innehåll
 if (isset($_SESSION["adminloggedin"])) {
 
 ?>
-
     <body>
+        <!-- Header -->
         <header id="header-admin">
             <h1>administration</h1>
             <h2>amandas portfolio</h2>
         </header>
 
-
+        <!-- Navigation -->
         <nav class="flex-container">
             <ul class="flex-container">
                 <li><a href="#courses-h2">utbildning</a></li>
@@ -29,14 +30,16 @@ if (isset($_SESSION["adminloggedin"])) {
             </form>
         </nav>
 
+        <!-- Formulär -->
         <div id="container" class="flex-container">
-
+            <!-- Lägg till-formulär -->
             <aside>
                 <details>
                     <summary>
                         <h2>Lägg till +</h2>
                     </summary>
 
+                    <!-- Lägg till kurs -->
                     <div class="details-content">
                         <h3>Lägg till kurs</h3>
                         <form id="course-form">
@@ -63,6 +66,8 @@ if (isset($_SESSION["adminloggedin"])) {
                             <input type="submit" value="Lägg till" id="add-course" class="submit-btn">
                         </form>
                     </div>
+
+                    <!-- Lägg till jobb -->
                     <div class="details-content">
                         <h3>Lägg till anställning</h3>
                         <form id="job-form">
@@ -89,6 +94,8 @@ if (isset($_SESSION["adminloggedin"])) {
                             <input type="submit" value="Lägg till" id="add-job" class="submit-btn">
                         </form>
                     </div>
+
+                    <!-- Lägg till webbsida -->
                     <div class="details-content">
                         <h3>Lägg till webbsida</h3>
                         <form id="website-form">
@@ -107,7 +114,9 @@ if (isset($_SESSION["adminloggedin"])) {
                 </details>
             </aside>
 
+            <!-- Huvudinnehåll -->
             <main>
+                <!-- Skriv ut kurser -->
                 <section>
                     <h2 id="courses-h2">Utbildning</h2>
                     <h3>kurser</h3>
@@ -116,6 +125,7 @@ if (isset($_SESSION["adminloggedin"])) {
                     <div id="edit-course"></div>
                 </section>
 
+                <!-- Skriv ut jobb -->
                 <section>
                     <h2 id="jobs-h2">Anställningar</h2>
                     <h3>anställningar</h3>
@@ -124,6 +134,7 @@ if (isset($_SESSION["adminloggedin"])) {
                     <div id="edit-job"></div>
                 </section>
 
+                <!-- Skriv ut portfolio -->
                 <section>
                     <h2 id="portfolio-h2">Portfolio</h2>
                     <h3>webbsidor</h3>
@@ -140,6 +151,7 @@ if (isset($_SESSION["adminloggedin"])) {
         <?php
         include("includes/footer.php");
     } else {
+        // Skriv ut intruder-sida
         echo "<body id='intruder-body'><main id='intruder'><h1 id='intruder-h1'>Hallå där!</h1><p> Du måste logga in för att få administrera denna sida. Var vänligen logga in med giltigt användarnamn och lösenord. <a href='index.php'>Gå till logga in-sida</a></p></main><footer id='intruder-footer'>";
         include("includes/footer.php");
     }

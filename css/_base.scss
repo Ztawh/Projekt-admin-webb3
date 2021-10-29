@@ -24,24 +24,28 @@ $edit-color: darken(#4cc6db, 30);
 $edit-hover: #4cc6db;
 
 // Mixins
+// Desktop
 @mixin desktop {
     @media screen and (min-width: 900px){
         @content;
     }
 }
 
+// Surfplatta
 @mixin tablet {
     @media screen and (max-width: 900px){
         @content;
     }
 }
 
+// Mindre än 700px
 @mixin small-table {
     @media screen and (max-width: 700px){
         @content;
     }
 }
 
+// Mobiler
 @mixin mobile {
     @media screen and (max-width: 500px){
         @content;
