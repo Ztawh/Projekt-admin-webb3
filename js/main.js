@@ -294,20 +294,39 @@ function updateCourse(id) {
     let start = startInputEdit.value;
     let end = endInputEdit.value;
 
-    start += "-00";
-    end += "-00";
-
-    // Om ruta ibockad, sätt datum till noll
-    if (checkEdit.checked) {
-        end = "0000-00-00";
-    }
+    // start += "-00";
+    // end += "-00";
 
     if (school == "" || code == "" || name == "" || start == "") {
         alert("Alla fält måste fyllas i!");
         return false;
     }
 
-    if (end == "-00") {
+    // Kontrollera om formatet är rätt på datum
+    if (/^\d{4}-\d{2}$/g.test(start)) {
+        start += "-00";
+        console.log(start);
+    } else {
+        alert("Ange ett korrekt datumformat (YYYY-MM)");
+        return false;
+    }
+
+    // Om slutdatum är angivet, kontrollera format
+    if (end) {
+        if (/^\d{4}-\d{2}$/g.test(end)) {
+            end += "-00";
+        } else {
+            alert("Ange ett korrekt datumformat (YYYY-MM)");
+            return false;
+        }
+    }
+
+    // Om ruta ibockad, sätt datum till noll
+    if (checkEdit.checked) {
+        end = "0000-00-00";
+    }
+
+    if (end == "") {
         if (!checkCourse.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande kurs'.");
             return false;
@@ -543,20 +562,39 @@ function updateJob(id) {
     let start = startInputEdit.value;
     let end = endInputEdit.value;
 
-    start += "-00";
-    end += "-00";
+    // start += "-00";
+    // end += "-00";
+
+    // Kontrollerar om alla fält är ifyllda
+    if (workplace == "" || role == "" || desc == "" || start == "") {
+        alert("Alla fält måste fyllas i!");
+        return false;
+    }
+
+    // Kontrollera om formatet är rätt på datum
+    if (/^\d{4}-\d{2}$/g.test(start)) {
+        start += "-00";
+    } else {
+        alert("Ange ett korrekt datumformat (YYYY-MM)");
+        return false;
+    }
+
+    // Om slutdatum är angivet, kontrollera format
+    if (end) {
+        if (/^\d{4}-\d{2}$/g.test(end)) {
+            end += "-00";
+        } else {
+            alert("Ange ett korrekt datumformat (YYYY-MM)");
+            return false;
+        }
+    }
 
     // Om ruta ibockad, sätt datum till noll
     if (checkEdit.checked) {
         end = "0000-00-00";
     }
 
-    if (workplace == "" || role == "" || desc == "" || start == "") {
-        alert("Alla fält måste fyllas i!");
-        return false;
-    }
-
-    if (end == "-00") {
+    if (end == "") {
         if (!checkEdit.checked) {
             alert("Ange ett slutdatum eller bocka i 'Nuvarande anställning'.");
             return false;
