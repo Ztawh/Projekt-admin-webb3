@@ -478,10 +478,6 @@ footer {
   color: white;
   text-align: center;
   padding: 3rem;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
 }
 @media screen and (max-width: 500px) {
   footer {
