@@ -457,6 +457,14 @@ details {
     }
 }
 
+summary {
+    @include desktop {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
 // Tabell
 table {
     // Ta bort vit linje mellan alla td

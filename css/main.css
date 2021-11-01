@@ -396,6 +396,12 @@ details .details-content {
   margin: 1rem auto;
 }
 
+@media screen and (min-width: 900px) {
+  summary:hover {
+    cursor: pointer;
+  }
+}
+
 table {
   overflow: auto;
   border-collapse: collapse;
